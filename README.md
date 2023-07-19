@@ -2,6 +2,8 @@
 
 ## 허도영, 이선규
 
+![image](https://github.com/icp1481/madcamp3/assets/82937664/c1ad1dae-936b-4535-a871-930b9f8d1620)
+
 ### 기능
 
 #### 0. 유저의 노래 취향 분석 & 추천

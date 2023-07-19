@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MADify</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+    <h1 id="heading">MADify</h1>
+
+    <button id="button1" onclick="toggleButtonVisibility('button2')">MBTI</button>
+    <button id="button2" class="hidden" onclick="toggleButtonVisibility('button1')">Home
+    </button>
+
+    <script>
+        function toggleButtonVisibility(buttonId) {
+            var button = document.getElementById(buttonId);
+            var otherButton = buttonId === 'button1' ? document.getElementById('button2') : document.getElementById('button1');
+            var wowText = buttonId === 'button1' ? 'MADify' : 'Analyzing your music preferences...'; // 버튼에 따라 다른 문구 설정
+            button.classList.remove("hidden");
+            otherButton.classList.add("hidden");
+            heading.innerText = wowText;
+        }
+
+        // 페이지 로드 시 초기 상태로 버튼 1만 표시되도록 설정
+        window.onload = function() {
+            toggleButtonVisibility('button1');
+        };
+
+    </script>
+</body>
+</html>

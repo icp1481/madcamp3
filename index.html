@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MADify</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+        /* 버튼 스타일 설정 */
+        .my-button {
+            width: 220px; /* 버튼의 너비 */
+            height: 40px; /* 버튼의 높이 */
+            background-color:#FFB2D9; /* 버튼의 배경색 */
+            color: #000000; /* 버튼의 텍스트 색상 */
+            font-size: 16px; /* 버튼의 글꼴 크기 */
+            border-radius: 5px; /* 버튼의 테두리 반경 */
+            
+            margin: 10px; /* 버튼의 바깥쪽 여백 */
+            padding: 5px; /* 버튼의 안쪽 여백 */
+        }
+        .my-button2 {
+            width: 220px; /* 버튼의 너비 */
+            height: 40px; /* 버튼의 높이 */
+            background-color:#BDBDBD; /* 버튼의 배경색 */
+            color: #000000; /* 버튼의 텍스트 색상 */
+            font-size: 16px; /* 버튼의 글꼴 크기 */
+            border-radius: 5px; /* 버튼의 테두리 반경 */
+            
+            margin: 10px; /* 버튼의 바깥쪽 여백 */
+            padding: 5px; /* 버튼의 안쪽 여백 */
+        }
+        .my-button3 {
+            width: 220px; /* 버튼의 너비 */
+            height: 40px; /* 버튼의 높이 */
+            background-color:#6799FF; /* 버튼의 배경색 */
+            color: #000000; /* 버튼의 텍스트 색상 */
+            font-size: 16px; /* 버튼의 글꼴 크기 */
+            border-radius: 5px; /* 버튼의 테두리 반경 */
+           
+            margin: 10px; /* 버튼의 바깥쪽 여백 */
+            padding: 5px; /* 버튼의 안쪽 여백 */
+        }
+        .my-text {
+            width: 220px; /* 버튼의 너비 */
+            height: 80px; /* 버튼의 높이 */
+            background-color:#00D8FF; /* 버튼의 배경색 */
+            color: #000000; /* 버튼의 텍스트 색상 */
+            font-size: 60px; /* 버튼의 글꼴 크기 */
+            border-radius: 5px; /* 버튼의 테두리 반경 */
+            border: none; /* 버튼의 테두리 제거 */
+            margin: 10px; /* 버튼의 바깥쪽 여백 */
+            padding: 5px; /* 버튼의 안쪽 여백 */
+        }
+        .playlist_button {
+            width: 350px; /* 버튼의 너비 */
+            height: 20px; /* 버튼의 높이 */
+            background-color:#D1B2FF; /* 버튼의 배경색 */
+            color: #000000; /* 버튼의 텍스트 색상 */
+            font-size: 5px; /* 버튼의 글꼴 크기 */
+            border-radius: 5px; /* 버튼의 테두리 반경 */
+            border: none; /* 버튼의 테두리 제거 */
+            margin: 10px; /* 버튼의 바깥쪽 여백 */
+            padding: 5px; /* 버튼의 안쪽 여백 */
+        }
+        #button-container {
+            position: absolute;
+            top: 62%;
+            left: 150px;
+            transform: translateY(-40%);
+        }
+
+        #ADD {
+            position: absolute;
+            top: 600px; /* 버튼의 상단 좌표 */
+            left: 200px; /* 버튼의 좌측 좌표 */
+        }
+
+        #message {
+            position: fixed;
+            top: 700px; /* 메시지의 상단 좌표 */
+            left: 200px; /* 메시지의 좌측 좌표 */
+        }
+
+        #playlist_button {
+            position: fixed;
+            top: 120px; /* 메시지의 상단 좌표 */
+            left: 620px; /* 메시지의 좌측 좌표 */
+        }
+    </style>
+</head>
+<body>
+    
+    
+    <h1 class="my-text" id="heading">MADify</h1>
+    <button class="my-button2" id="SEARCH", class="hidden" onclick="search_music();  resetServer();">어떤 음악을 듣고 싶으세요?</button>
+    <button class="my-button3" id="LIKE", class="hidden" onclick="toggleButtonVisibility('LIKE');  resetServer();">좋아요 표시한 곡</button>
+    <button class="my-button" id="mbti" onclick="toggleButtonVisibility('button2'); resetServer();">What is your music MBTI?</button>
+    <button id="home" class="hidden" onclick="toggleButtonVisibility('button1'); resetServer();">Home </button>
+    
+    <button id="START", class="hidden" onclick="startApp(); resetServer();">Start/Restart</button>
+    <button id="GOOD",class="hidden" onclick="runPythonScriptGood();">Like This Music</button>
+    <button id="BAD",class="hidden" onclick="runPythonScriptBad();">Unlike This Music</button>
+    <div id="button-container">
+        <button id="prev" class="hidden" onclick="prev();">prev</button>
+        <button id="play" class="hidden" onclick="player();">next</button>
+        <button id="del" class="hidden" onclick="del();">좋아요에서 삭제</button>
+    </div>
+    <!-- <button id="playlist_button" class="playlist_button"></h1> -->
+   <!-- <button id="prev",class="hidden" onclick="prev();">prev</button>
+    <button id="play",class="hidden" onclick="player();">next</button>
+    <button id="del",class="hidden" onclick="del();">좋아요에서 삭제</button> -->
+
+    <!-- <button id="TEST" onclick="func_test();">TEST</button> -->
+    <button id="ADD",class="hidden" onclick="func_add();">좋아요에 추가</button>
+
+    <p id = "checking"> Testing : </p>
+    <p id = "Progress"> Progress : </p>
+    <div id="video-container"></div>
+    <div id="plot-container"></div>
+
+    <script>
+        function toggleButtonVisibility(buttonId) {
+            var previousTable = document.querySelector("table");
+            if (previousTable) {
+                previousTable.remove();
+            }
+            //var button = document.getElementById(buttonId);
+            //var otherButton = buttonId === 'button1' ? document.getElementById('button2') : document.getElementById('button1');
+            //var wowText = buttonId === 'button1' ? 'MADify' : 'MBTI'; // 버튼에 따라 다른 문구 설정
+            
+            //button.classList.remove("hidden");
+            //otherButton.classList.add("hidden");
+            var wowText;
+            /*if (buttonId === 'LIKE') {
+                promt("!!!");
+                localStorage.setItem("ID", "1");
+            }*/
+            if (buttonId === 'button1' || buttonId === 'ADD') wowText = 'MADify';
+            else if (buttonId === 'button2') wowText = 'MBTI';
+            else wowText = 'LIKE';
+            button = document.getElementById('LIKE');
+            if (buttonId === 'button1' || buttonId === 'ADD') {
+                button.classList.remove("hidden");
+            } else {
+                button.classList.add("hidden");
+            }
+            /*button = document.getElementById('playlist_button');
+            if (buttonId === 'LIKE') {
+                button.classList.remove("hidden");
+            } else {
+                button.classList.add("hidden");
+            }*/
+            button = document.getElementById('play');
+            if (buttonId === 'LIKE') {
+                button.classList.remove("hidden");
+            } else {
+                button.classList.add("hidden");
+            }
+
+            button = document.getElementById('mbti');
+            if (buttonId === 'button1' || buttonId === 'ADD') {
+                button.classList.remove("hidden");
+            } else {
+                button.classList.add("hidden");
+            }
+            button = document.getElementById('home');
+            if (buttonId === 'button1' || buttonId === 'ADD') {
+                button.classList.add("hidden");
+            } else {
+                button.classList.remove("hidden");
+            }
+            button = document.getElementById('START');
+            if (buttonId === 'button2') {
+                button.classList.remove("hidden");
+            } else {
+                button.classList.add("hidden");
+            }
+            button = document.getElementById('GOOD');
+            if (buttonId === 'button2') {
+                button.classList.remove("hidden");
+            } else {
+                button.classList.add("hidden");
+            }
+            button = document.getElementById('BAD');
+            if (buttonId === 'button2') {
+                button.classList.remove("hidden");
+            } else {
+                button.classList.add("hidden");
+            }
+            var buttonContainer = document.getElementById('button-container');
+            buttonContainer.appendChild(document.getElementById('prev'));
+            buttonContainer.appendChild(document.getElementById('play'));
+            buttonContainer.appendChild(document.getElementById('del'));
+            button = document.getElementById('prev');
+            if (buttonId === 'LIKE') {
+                button.classList.remove("hidden");
+            } else {
+                button.classList.add("hidden");
+            }
+            button = document.getElementById('del');
+            if (buttonId === 'LIKE') {
+                button.classList.remove("hidden");
+            } else {
+                button.classList.add("hidden");
+            }
+
+            button = document.getElementById('ADD');
+            if (buttonId === 'ADD') {
+                button.classList.remove("hidden");
+            } else {
+                button.classList.add("hidden");
+            }
+            but4 = document.getElementById('SEARCH');
+            if (buttonId === 'button1' || buttonId === 'ADD') {
+                but4.classList.remove("hidden");
+                
+            } else {
+                but4.classList.add("hidden");
+            }
+            but_like = document.getElementById('LIKE');
+            if (buttonId === 'button1' || buttonId === 'ADD') {
+                but_like.classList.remove("hidden");
+                
+            } else {
+                but_like.classList.add("hidden");
+            }
+
+
+            heading.innerText = wowText;
+            if (buttonId === 'LIKE') {
+                player_init();
+            }
+        }
+        let list = ['wXlrZpTWKgM', 'WJua7KEP_oE', 'ulr0muQKjk0', '3fR9Uzt06WM', '2ips2mM7Zqw'];
+        var til_list = ['1 To 10', '1 of 1', '11:11', 'All for you', 'BANG BANG BANG'];
+        let cnt = 0;
+        function func_test() {
+            //const tt = localStorage.getItem("ID");
+            //alert(tt);
+            if (cnt < list.length) {
+                localStorage.setItem(list[cnt], list[cnt]);
+                cnt++;
+            }
+        }
+        function func_add() {
+            console.log("!!!!!");
+            localStorage.setItem(title, foundElement);
+            var message = "이 노래를 좋아요에 추가했습니다!"; // 화면에 보여줄 메시지
+
+            var messageElement = document.createElement("div"); // 새로운 div 요소 생성
+            messageElement.id = 'message';
+            messageElement.style.position = 'fixed';
+            messageElement.style.top = '650px';
+            messageElement.style.left = '150px';
+            messageElement.textContent = message; // 메시지 내용 설정
+            document.body.appendChild(messageElement); // 메시지 요소를 body에 추가
+
+            // 3초 후에 메시지 숨기기
+            setTimeout(function() {
+                messageElement.style.display = "none";
+            }, 2000);
+        }
+        window.onload = function() {
+            toggleButtonVisibility('button1');
+        };
+        let check_started = 0;
+        let numOfSongs = 0;
+        let title;
+        var foundElement = null;
+        function search_music() {
+            title = prompt("어떤 음악을 듣고 싶으세요?");
+            foundElement = null;
+            for (var i = 0; i < list.length; i++) {
+                if (til_list[i] === title) {
+                    foundElement = list[i];
+                    break;
+                }
+            }
+            if (foundElement !== null) {
+                loadYouTubeVideo(foundElement);
+                toggleButtonVisibility('ADD');
+
+            } else {
+                var message = "열심히 찾았지만 해당 제목의 노래를 찾지 못했어요 ㅠㅠ"; // 화면에 보여줄 메시지
+                
+                var messageElement = document.createElement("div"); // 새로운 div 요소 생성
+                messageElement.id = 'message';
+                messageElement.style.position = 'fixed';
+                messageElement.style.top = '650px';
+                messageElement.style.left = '80px';
+                messageElement.textContent = message; // 메시지 내용 설정
+                document.body.appendChild(messageElement); // 메시지 요소를 body에 추가
+
+                // 3초 후에 메시지 숨기기
+                setTimeout(function() {
+                    messageElement.style.display = "none";
+                }, 3000);
+
+                hideYouTubeVideo();
+            }
+        }
+        function startApp() {
+            numOfSongs = prompt("This is a program that recommends music that's just right for you! To get a feel for your music tastes, we'll play you a few songs. How many songs would you like to listen to? (5-15)");
+            numOfSongs = parseInt(numOfSongs);
+            
+            if (numOfSongs < 5 || numOfSongs > 15 || isNaN(numOfSongs)) {
+                alert("Give Valid Numbers");
+                startApp();
+            } else {
+                //loadYouTubeVideo('NeDeZUqNiVo?start=125');
+                loadYouTubeVideo('NeDeZUqNiVo');
+                console.log(numOfSongs + " songs will be played.");
+                if(check_started==0){
+                    check_started += 1;
+                }
+            }
+        }
+        
+        var idx = 0;
+        
+        function show_table(idx) {
+            var previousTable = document.querySelector("table");
+            if (previousTable) {
+                previousTable.remove();
+            }
+            var table = document.createElement("table");
+
+            table.style.position = "absolute";  // 표의 위치를 절대적으로 설정
+            table.style.top = "100px";          // 상단에서 100px 위치에 표 배치
+            table.style.left = "650px";         // 왼쪽에서 200px 위치에 표 배치
+            // 표 헤더 생성
+            var tableHeader = document.createElement("thead");
+            var headerRow = document.createElement("tr");
+            var headerCell1 = document.createElement("th");
+            headerCell1.textContent = "Title";
+            var headerCell2 = document.createElement("th");
+            headerCell2.textContent = "Artist";
+           // headerCell3.textContent = "Duration";
+            headerRow.appendChild(headerCell1);
+            headerRow.appendChild(headerCell2);
+            tableHeader.appendChild(headerRow);
+            table.appendChild(tableHeader);
+
+            // 표 바디 생성
+            var tableBody = document.createElement("tbody");
+
+            // 모든 키(key)를 가져와서 표에 추가
+            for (var i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                var value = localStorage.getItem(key);
+
+                var row = document.createElement("tr");
+
+                // Apply red text color to the row that matches the provided idx
+                if (i === idx) {
+                    row.style.backgroundColor = "yellow";
+                } else {
+
+                    row.style.backgroundColor = "white";
+                }
+                var cell1 = document.createElement("td");
+                cell1.textContent = key;
+                cell1.style.paddingRight = "60px";
+                cell1.style.borderRight = "1px solid black";
+
+                var cell2 = document.createElement("td");
+                cell2.textContent = value;
+
+                row.appendChild(cell1);
+                row.appendChild(cell2);
+                tableBody.appendChild(row);
+            }
+
+            table.appendChild(tableBody);
+
+            // 표를 화면에 추가
+            document.body.appendChild(table);
+        }
+
+        function player_init() {
+            // 로컬 스토리지에서 모든 키 가져오기
+            
+            const keys = Object.keys(localStorage);
+
+            // 랜덤한 키 선택
+            //const randomKey = keys[Math.floor(Math.random() * keys.length)];
+            idx = 0;
+            
+
+            // 선택한 키에 해당하는 값을 가져와서 유튜브 영상 틀기
+            const youtubeVideoId = localStorage.getItem(randomKey);
+            console.log(idx);
+            /*var h1 = document.createElement("playlist_button");
+            h1.style.position = "fixed";
+            h1.style.top = (120 + idx * 20) + "px"; // h1 태그의 상단 좌표 설정
+            h1.style.left = "620px"; 
+            document.body.appendChild(h1);*/ 
+            if (youtubeVideoId) {
+                //loadYouTubeVideo(youtubeVideoId);
+                const videoContainer = document.getElementById('video-container');
+                videoContainer.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${youtubeVideoId}" frameborder="0" allowfullscreen></iframe>`;
+            } else {
+                console.log('해당 키에 대한 값이 없습니다.');
+            }
+            show_table(idx);
+        }
+
+        function player() {
+            // 로컬 스토리지에서 모든 키 가져오기
+            
+            const keys = Object.keys(localStorage);
+
+            // 랜덤한 키 선택
+            //const randomKey = keys[Math.floor(Math.random() * keys.length)];
+            idx++;
+            if (idx == keys.length) idx = 0;
+            const randomKey = keys[idx];
+            
+
+            // 선택한 키에 해당하는 값을 가져와서 유튜브 영상 틀기
+            const youtubeVideoId = localStorage.getItem(randomKey);
+            console.log(idx);
+            /*var h1 = document.createElement("playlist_button");
+            h1.style.position = "fixed";
+            h1.style.top = (120 + idx * 20) + "px"; // h1 태그의 상단 좌표 설정
+            h1.style.left = "620px"; 
+            document.body.appendChild(h1);*/ 
+            if (youtubeVideoId) {
+                //loadYouTubeVideo(youtubeVideoId);
+                const videoContainer = document.getElementById('video-container');
+                videoContainer.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${youtubeVideoId}" frameborder="0" allowfullscreen></iframe>`;
+            } else {
+                console.log('해당 키에 대한 값이 없습니다.');
+            }
+            show_table(idx);
+        }
+
+        function prev() {
+            // 로컬 스토리지에서 모든 키 가져오기
+            const keys = Object.keys(localStorage);
+
+            // 랜덤한 키 선택
+            //const randomKey = keys[Math.floor(Math.random() * keys.length)];
+            
+            idx--;
+            if (idx == -1) idx = keys.length - 1;
+            const randomKey = keys[idx];
+            console.log(idx);
+
+            // 선택한 키에 해당하는 값을 가져와서 유튜브 영상 틀기
+            const youtubeVideoId = localStorage.getItem(randomKey);
+            if (youtubeVideoId) {
+                //loadYouTubeVideo(youtubeVideoId);
+                const videoContainer = document.getElementById('video-container');
+                videoContainer.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${youtubeVideoId}" frameborder="0" allowfullscreen></iframe>`;
+            } else {
+                console.log('해당 키에 대한 값이 없습니다.');
+            }
+            show_table(idx);
+        }
+
+        function del() {
+            // 로컬 스토리지에서 모든 키 가져오기
+            const keys = Object.keys(localStorage);
+            localStorage.removeItem(keys[idx]);
+            idx--;
+            if (idx == -1) idx = keys.length - 1;
+            player();
+            // 랜덤한 키 선택
+            //const randomKey = keys[Math.floor(Math.random() * keys.length)];
+
+            // 선택한 키에 해당하는 값을 가져와서 유튜브 영상 틀기
+            
+        }
+
+        function resetServer() {
+            var previousTable = document.querySelector("table");
+            if (previousTable) {
+                previousTable.remove();
+            }
+            fetch('/reset', {method: 'POST'});
+            if(check_started>1){
+                check_started = 1;
+                var px = document.getElementById("checking");
+                px.textContent = 'Testing : ';
+                        
+                let qx = document.getElementById("Progress");
+                qx.innerText = 'Progress : ';
+            }     
+            fetch('/get-plot')
+                .then(response => response.text())
+                .then(loadPlotImage);
+        }  
+
+        function loadPlotImage(png_image_base64) {
+            var plotContainer = document.getElementById('plot-container');
+            let img = document.createElement('img');
+            img.src = 'data:image/png;base64,' + png_image_base64;
+            plotContainer.innerHTML = '';
+            plotContainer.appendChild(img);
+        }
+
+        function loadYouTubeVideo(domain) {
+            var videoContainer = document.getElementById('video-container');
+            videoContainer.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + domain + '" frameborder="0" allowfullscreen></iframe>';
+        }
+
+        function runPythonScriptGood() {
+            fetch('/run-script-GOOD')
+                .then(response => response.text())
+                .then(result => {
+                    if(check_started!=0 && check_started<=numOfSongs){
+                        //localStorage.setItem("ID", "1");
+                        let [url,ent_p,ent_c] = result.split(',');
+                        let Ent_p = parseFloat(ent_p);
+                        let Ent_c = parseFloat(ent_c);
+                        loadYouTubeVideo(url);
+                        var po = document.getElementById("checking");
+                        po.textContent += 'O';
+                        
+                        let qo = document.getElementById("Progress");
+                        qo.innerText = 'Progress : ' + check_started.toString() + '/'+ numOfSongs.toString();
+                        
+                        check_started += 1;
+                    } else {
+                        if(check_started>=numOfSongs){
+                            window.location.href = "/recommend";
+                            fetch('/recommend')
+                            .then(response => response.text())
+                        }else if(check_started == 0){
+                            alert("please press start button");
+                        }
+                    }
+                        
+                });
+            if (numOfSongs >= check_started){
+                fetch('/get-plot')
+                .then(response => response.text())
+                .then(loadPlotImage);
+            }else {
+                fetch('/recommend')
+            }
+        }
+        
+        function runPythonScriptBad() {
+            fetch('/run-script-BAD')
+                .then(response => response.text())
+                .then(result => {
+                    if(check_started!=0 && check_started<=numOfSongs){
+                        let [url,ent_p,ent_c] = result.split(',');
+                        let Ent_p = parseFloat(ent_p);
+                        let Ent_c = parseFloat(ent_c);
+                        loadYouTubeVideo(url);
+                        var px = document.getElementById("checking");
+                        px.textContent += 'X';
+                        
+                        let qx = document.getElementById("Progress");
+                        qx.innerText = 'Progress : ' + check_started.toString() + '/'+ numOfSongs.toString();
+                    
+                        check_started += 1;
+                    } else {
+                        if(check_started>=numOfSongs){
+                            window.location.href = "/recommend";
+                            fetch('/recommend')
+                        }else if(check_started == 0){
+                            alert("please press start button");
+                        }
+                    }
+                });
+            if (numOfSongs >= check_started){
+                fetch('/get-plot')
+                .then(response => response.text())
+                .then(loadPlotImage);
+            }else {
+                fetch('/recommend')
+            }
+        }
+
+        function getFavoriteItems() {
+            const favoriteItems = localStorage.getItem('favoriteItems');
+            return favoriteItems ? JSON.parse(favoriteItems) : [];
+        }
+
+        function setFavoriteItems(items) {
+            localStorage.setItem('favoriteItems', JSON.stringify(items));
+        }
+
+        function addToFavorites(itemId) {
+            const favoriteItems = getFavoriteItems();
+            favoriteItems.push(itemId);
+            setFavoriteItems(favoriteItems);
+        }
+        
+        function removeFromFavorites(itemId) {
+            const favoriteItems = getFavoriteItems();
+            const index = favoriteItems.indexOf(itemId);
+            if (index > -1) {
+                favoriteItems.splice(index, 1);
+                setFavoriteItems(favoriteItems);
+            }
+        }
+
+    </script>
+</body>
+</html>
